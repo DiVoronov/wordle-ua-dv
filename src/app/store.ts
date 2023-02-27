@@ -1,9 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { stagesFillReducer } from './slices/stagesFillSlice';
+import { correctWordReducer } from './slices/correctWordSlice';
+import { stagesWordsReducer } from './slices/stagesWordsSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    stagesFill: stagesFillReducer,
+    correctWord: correctWordReducer,
+    stagesWords: stagesWordsReducer,
   },
 });
 
