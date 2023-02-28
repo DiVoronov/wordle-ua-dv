@@ -33,7 +33,6 @@ interface ICellRowProps {
 export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
 
   const correctWord = useSelector( (state: RootState) => state.correctWord );
-  console.log(correctWord);
   
   const correctWordArray = correctWord.split('');
 
@@ -86,6 +85,33 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
     // } else { console.log('word is NOT correct') };
   };
 
+  const cellBgColor = (index: number) => {
+
+    const clientWordArray = props.clientPreviousWord?.split('');
+
+    // console.log(
+    //   'cellBgColor WAS CALLED, index: ', index, 
+    //   ' clientWordArray: ', clientWordArray,
+    //   'client letter INDEX: ', clientWordArray![index],
+    //   'correct letter INDEX: ', correctWordArray[index],
+    // );
+      // console.log(correctWordArray);
+      // console.log(clientWordArray);
+
+      // console.log('second IF: ', correctWordArray.filter( letter => letter.toUpperCase() === clientWordArray![index]));
+
+    if (clientWordArray![index] === correctWordArray[index].toUpperCase()) {
+      // console.log('first IF: ', clientWordArray![index], correctWordArray[index]);
+      return '#79b851';
+    } else if (correctWordArray.filter( letter => letter.toUpperCase() === clientWordArray![index]).length !== 0) {
+      // console.log('second IF: ', correctWordArray.filter( letter => letter === clientWordArray[index]));
+      return '#f3c237';
+    } else {
+      // console.log('ELSE')
+      return '#a0a0a0';
+    };
+  };
+
   return (
     <div className='cellRow'>
       {/* <form onSubmit={checkClientWord}> */}
@@ -110,13 +136,13 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
           ?
           correctWordArray.map( (letter, index) => {
             return (
-              <Cell key={index} color='#f5f5f5'/>
+              <Cell key={index} color={{bgColor: '#f5f5f5'}}/>
             );
           })
           :
           props.clientPreviousWord?.split('').map( (letter, index) => {
             return (
-              <Cell key={index} letter={letter} color='#f5f5f5'/>
+              <Cell key={index} letter={letter} color={{bgColor: cellBgColor(index), textColor: '#fff'}}/>
             );
           })
         }

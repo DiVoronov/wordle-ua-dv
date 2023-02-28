@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 interface ICellInputProps {
   letter: string
-  color: string
+  color?: string
   index: number
   changeLetterFunction: (letter: string, index: number) => void
 };
 
-export const CellInput: React.FC<ICellInputProps> = ( { letter, color, changeLetterFunction, index }: ICellInputProps ) => {
+export const CellInput: React.FC<ICellInputProps> = ( { letter, changeLetterFunction, index }: ICellInputProps ) => {
 
   const [ value, setValue ] = useState('');
 
@@ -39,6 +39,9 @@ export const CellInput: React.FC<ICellInputProps> = ( { letter, color, changeLet
         console.log('handle FN was called ');
         setValue(e.currentTarget.value.toUpperCase());
         changeLetterFunction( e.currentTarget.value.toUpperCase(), index );
+        document.dispatchEvent(new KeyboardEvent('keydown', {
+          key: 'Tab',
+        }))
     };
   };
 
@@ -46,7 +49,6 @@ export const CellInput: React.FC<ICellInputProps> = ( { letter, color, changeLet
     <input 
       className='cellInput' 
       type='text' 
-      style={{background: color}}
       onChange={handleValueInput}
       value={value}
     >
