@@ -6,9 +6,10 @@ interface ICellInputProps {
   index: number
   clientWordFromInputs: string[]
   changeLetterFunction: (letter: string, index: number) => void
+  classNameForAnimations?: string
 };
 
-export const CellInput: React.FC<ICellInputProps> = ( { letter, changeLetterFunction, index, clientWordFromInputs }: ICellInputProps ) => {
+export const CellInput: React.FC<ICellInputProps> = ( { letter, changeLetterFunction, index, clientWordFromInputs, classNameForAnimations }: ICellInputProps ) => {
 
   const inputRef: React.MutableRefObject<null | HTMLInputElement> = useRef(null);
 
@@ -96,7 +97,7 @@ export const CellInput: React.FC<ICellInputProps> = ( { letter, changeLetterFunc
 
   return (
     <input 
-      className={`cellInput`} 
+      className={`cellInput ${classNameForAnimations}`} 
       id={`cell-input-${index}`}
       type='text' 
       onChange={handleValueInput}

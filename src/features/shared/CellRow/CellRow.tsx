@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { CellInput } from '../CellInput/CellInput';
 import { Cell } from '../Cell/Cell';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +19,8 @@ import {
   setFifthStatus, 
   setSixthStatus 
 } from '../../../app/slices/stagesFillSlice';
+import { setWinStatus } from '../../../app/slices/winSlice';
+import { pushMatchedGreenLettersArray, pushMatchedYellowLettersArray  } from '../../../app/slices/matchedLetterSlice';
 
 interface IPropsFromCellGrid {
   statusRow: 'input' | 'emptyDiv' | 'filledDiv'
@@ -33,10 +35,15 @@ interface ICellRowProps {
 export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
 
   const correctWord = useSelector( (state: RootState) => state.correctWord );
+  const wordsList = useSelector( (state: RootState) => state.allWords );
   
   const correctWordArray = correctWord.split('');
 
   const [ clientWordFromInputs, setClientWordFromInputs ] = useState(['', '', '', '', '',]);
+  const [ classNameForAnimations, setClassNameForAnimations ] = useState('');
+  // const [ resultOfCheckMatchInWordsList, setResultOfCheckMatchInWordsList ] = useState<string | undefined>('');
+  
+  // let classNameForAnimations = '';
 
   const handleChangeClientWordFromInputs = ( (letter: string, index: number) => {
     setClientWordFromInputs(prev => {
@@ -49,6 +56,8 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
 
   const dispatch = useDispatch();
 
+  const checkMatchInWordsList = useMemo( () => wordsList.find( element => element.toUpperCase() === clientWordFromInputs.join('')), [clientWordFromInputs] );
+
   document.addEventListener('keypress', (e: KeyboardEvent) => {
     // console.log(e.key)
     // e.preventDefault();
@@ -58,8 +67,20 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
       console.log(correctWord.toUpperCase())
 
       e.preventDefault();
-      if (clientWordFromInputs.join('') === correctWord.toUpperCase()) {
+
+      if (
+        checkMatchInWordsList === undefined
+      ) {
+        setClassNameForAnimations('class-name-for-animations');
+        setTimeout( () => setClassNameForAnimations(''), 1000);
+        // classNameForAnimations = 'class-name-for-animations';
+        // setTimeout( () => classNameForAnimations = '', 500);
+
+
+      } else if (clientWordFromInputs.join('') === correctWord.toUpperCase()) {
         console.log('word is correct. ', 'correctWord: ', correctWord.toUpperCase(), ', and your: ', clientWordFromInputs.join('') );
+
+        dispatch(setWinStatus(true));
 
         if (props.stage === 1) { dispatch(setFirstWord(clientWordFromInputs.join(''))); dispatch(setFirstStatus(true)) };
         if (props.stage === 2) { dispatch(setSecondWord(clientWordFromInputs.join(''))); dispatch(setSecondStatus(true)) };
@@ -83,33 +104,17 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
     
   });
 
-  const checkClientWord = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // if (clientWordFromInputs.join('') === correctWord) {
-    //   console.log('word is correct');
-    // } else { console.log('word is NOT correct') };
-  };
-
   const cellBgColor = (index: number) => {
 
     const clientWordArray = props.clientPreviousWord?.split('');
 
-    // console.log(
-    //   'cellBgColor WAS CALLED, index: ', index, 
-    //   ' clientWordArray: ', clientWordArray,
-    //   'client letter INDEX: ', clientWordArray![index],
-    //   'correct letter INDEX: ', correctWordArray[index],
-    // );
-      // console.log(correctWordArray);
-      // console.log(clientWordArray);
-
-      // console.log('second IF: ', correctWordArray.filter( letter => letter.toUpperCase() === clientWordArray![index]));
-
     if (clientWordArray![index] === correctWordArray[index].toUpperCase()) {
       // console.log('first IF: ', clientWordArray![index], correctWordArray[index]);
+      dispatch(pushMatchedGreenLettersArray(clientWordArray![index]));
       return '#79b851';
     } else if (correctWordArray.filter( letter => letter.toUpperCase() === clientWordArray![index]).length !== 0) {
       // console.log('second IF: ', correctWordArray.filter( letter => letter === clientWordArray[index]));
+      dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
       return '#f3c237';
     } else {
       // console.log('ELSE')
@@ -119,6 +124,8 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
 
   useEffect( () => {
     document.getElementById(`cell-input-0`)?.focus();
+
+    // return () => setClassNameForAnimations('');
   }, []);
 
   return (
@@ -138,6 +145,7 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
                 changeLetterFunction={handleChangeClientWordFromInputs} 
                 clientWordFromInputs={clientWordFromInputs}
                 color='#fff'
+                classNameForAnimations={classNameForAnimations}
               />
             );
           })

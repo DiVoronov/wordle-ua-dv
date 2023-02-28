@@ -36,6 +36,45 @@ gap: 5px;
         color: #454545;
         caret-color: transparent;
     }
+
+    & .class-name-for-animations {
+        animation: shake .5s ease-in-out 0s;
+    }
+
+    @keyframes shake {
+        0% {
+            transform: translateX(0px);
+        }
+        10% {
+            transform: translateX(20px);
+        }
+        20% {
+            transform: translateX(-2px);
+        }
+        30% {
+            transform: translateX(2px);
+        }
+        40% {
+            transform: translateX(-2px);
+        }
+        50% {
+            transform: translateX(2px);
+        }
+        60% {
+            transform: translateX(-2px);
+        }
+        70% {
+            transform: translateX(2px);
+        }
+        80% {
+            transform: translateX(-2px);
+        }
+        90% {
+            transform: translateX(2px);
+        }100% {
+            transform: translateX(0px);
+        }
+    }
 }
 
 `;

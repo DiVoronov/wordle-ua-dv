@@ -1,34 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { CellGrid } from './features/Game/CellGrid/CellGrid';
-import { useDispatch } from 'react-redux';
-import { setCorrectWord } from './app/slices/correctWordSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { wordList } from './wordList';
+import { RootState } from './app/store';
+import { WinWindow } from './features/Game/WinWindow/WinWindow';
+import { Keyboard } from './features/Game/Keyboard/Keyboard';
 
 function App() {
 
-  // const dispatch = useDispatch();
-  // useEffect( () => {
-  //   const fiveLetterWordArray = wordList.filter( word => word.length === 5 );
-  //   const randomWordIndex = Math.floor(Math.random() * (fiveLetterWordArray.length - 1));
-
-  //   dispatch(setCorrectWord(fiveLetterWordArray[randomWordIndex]));
-  //   console.log(fiveLetterWordArray[randomWordIndex]);
-  // }, []);
-
-  const changeWord = () => {
-    const fiveLetterWordArray = wordList.filter( word => word.length === 5 );
-    const randomWordIndex = Math.floor(Math.random() * (fiveLetterWordArray.length - 1));
-
-    // dispatch(setCorrectWord(fiveLetterWordArray[randomWordIndex]));
-    console.log(fiveLetterWordArray[randomWordIndex]);
-  }
+  const winStatus = useSelector( (state: RootState) => state.win );
 
   return (
     <div className="App">
       <CellGrid/>
-
-      <button onClick={changeWord}>change word</button>
+      {
+        winStatus
+        &&
+        <WinWindow/>
+      }
+      <Keyboard/>
     </div>
   );
 }
