@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CellInput } from '../CellInput/CellInput';
 import { Cell } from '../Cell/Cell';
 import { useDispatch, useSelector } from 'react-redux';
@@ -61,7 +61,12 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
       if (clientWordFromInputs.join('') === correctWord.toUpperCase()) {
         console.log('word is correct. ', 'correctWord: ', correctWord.toUpperCase(), ', and your: ', clientWordFromInputs.join('') );
 
-
+        if (props.stage === 1) { dispatch(setFirstWord(clientWordFromInputs.join(''))); dispatch(setFirstStatus(true)) };
+        if (props.stage === 2) { dispatch(setSecondWord(clientWordFromInputs.join(''))); dispatch(setSecondStatus(true)) };
+        if (props.stage === 3) { dispatch(setThirdWord(clientWordFromInputs.join(''))); dispatch(setThirdStatus(true)) };
+        if (props.stage === 4) { dispatch(setFourthWord(clientWordFromInputs.join(''))); dispatch(setFourthStatus(true)) };
+        if (props.stage === 5) { dispatch(setFifthWord(clientWordFromInputs.join(''))); dispatch(setFifthStatus(true)) };
+        if (props.stage === 6) { dispatch(setSixthWord(clientWordFromInputs.join(''))); dispatch(setSixthStatus(true)) };
 
       } else { 
         console.log('word is NOT correct');
@@ -112,6 +117,10 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
     };
   };
 
+  useEffect( () => {
+    document.getElementById(`cell-input-0`)?.focus();
+  }, []);
+
   return (
     <div className='cellRow'>
       {/* <form onSubmit={checkClientWord}> */}
@@ -127,6 +136,7 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
                 letter={letter} 
                 index={index}
                 changeLetterFunction={handleChangeClientWordFromInputs} 
+                clientWordFromInputs={clientWordFromInputs}
                 color='#fff'
               />
             );
