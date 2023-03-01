@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/wordle-ua-dv/static/css/main.8f5ce354.css",
+    "main.js": "/wordle-ua-dv/static/js/main.7d9c9d96.js",
+    "index.html": "/wordle-ua-dv/index.html",
+    "main.8f5ce354.css.map": "/wordle-ua-dv/static/css/main.8f5ce354.css.map",
+    "main.7d9c9d96.js.map": "/wordle-ua-dv/static/js/main.7d9c9d96.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8f5ce354.css",
+    "static/js/main.7d9c9d96.js"
+  ]
+}
