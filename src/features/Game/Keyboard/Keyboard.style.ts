@@ -29,4 +29,18 @@ gap: .5rem;
         padding: .6rem;
     }
 }
+
+@media screen and (max-width: 700px) {
+    width: 90%;
+    margin: 1rem auto;
+    gap: .2rem;
+    & div {
+        gap: .2rem;
+        & div {
+            font-size: 1rem;
+            width: 90%;
+            padding: .3rem;
+        }
+    }
+}
 `;

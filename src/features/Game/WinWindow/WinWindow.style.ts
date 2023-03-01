@@ -20,10 +20,10 @@ width: 100%;
     background: #f5f5f5;
     border: 2px solid grey;
     padding: 2rem;
-    margin: 30% auto;
+    margin: 20% auto;
 
-    & #answer {
+    /* & #answer {
         color: #79b851;
-    }
+    } */
 }
 `;

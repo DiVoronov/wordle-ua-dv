@@ -46,13 +46,16 @@ export const CellInput: React.FC<ICellInputProps> = ( { letter, changeLetterFunc
 
   const handleValueInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     
-    if (
+    if (e.currentTarget.value === '') {
+      setValue(e.currentTarget.value);
+      changeLetterFunction( e.currentTarget.value, index );
+    } else if (
         e.currentTarget.value.length <= 1 
         && 
         (
           (e.currentTarget.value.match(/[А-Яа-я]/gmi)) 
-          ||
-          (e.currentTarget.value === '')
+          // ||
+          // (e.currentTarget.value === '')
           ||
           (e.currentTarget.value.match(/і/gmi))
           ||
@@ -72,9 +75,9 @@ export const CellInput: React.FC<ICellInputProps> = ( { letter, changeLetterFunc
         console.log('handle FN was called ');
         setValue(e.currentTarget.value.toUpperCase());
         changeLetterFunction( e.currentTarget.value.toUpperCase(), index );
-        document.dispatchEvent(new KeyboardEvent('keydown', {
-          key: 'Tab',
-        }))
+        // document.dispatchEvent(new KeyboardEvent('keydown', {
+        //   key: 'Tab',
+        // }))
     };
 
     // if ( (inputRef!.current!.nextSibling as HTMLElement) && inputRef.current!.value) {console.log(inputRef.current!.nextSibling.focus())}
@@ -89,7 +92,7 @@ export const CellInput: React.FC<ICellInputProps> = ( { letter, changeLetterFunc
 
     if (((e.key === 'Backspace') || (e.key === 'ArrowLeft')) && previousElement) { 
       previousElement.focus();
-    } else if (nextElement) {
+    } else if (nextElement && ((e.key === 'ArrowRight') || e.key.match(/[А-Яа-я]/gmi) || e.key.match(/ї/gmi) || e.key.match(/є/gmi) || e.key.match(/і/gmi))) {
       nextElement.focus();
     }
   };

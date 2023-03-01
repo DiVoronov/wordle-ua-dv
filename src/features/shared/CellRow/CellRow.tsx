@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { CellInput } from '../CellInput/CellInput';
 import { Cell } from '../Cell/Cell';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,12 +46,10 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
   // let classNameForAnimations = '';
 
   const handleChangeClientWordFromInputs = ( (letter: string, index: number) => {
-    setClientWordFromInputs(prev => {
-      const temporaryArray = clientWordFromInputs;
-      temporaryArray[index] = letter; 
-      console.log(clientWordFromInputs, temporaryArray);
-      return [...temporaryArray];
-    });
+    const temporaryArray = clientWordFromInputs;
+    temporaryArray[index] = letter; 
+    console.log(clientWordFromInputs, temporaryArray);
+    setClientWordFromInputs([...temporaryArray]);
   });
 
   const dispatch = useDispatch();
@@ -104,23 +102,37 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
     
   });
 
-  const cellBgColor = (index: number) => {
+  const cellBgColor = useCallback( (index: number) => {
 
     const clientWordArray = props.clientPreviousWord?.split('');
 
     if (clientWordArray![index] === correctWordArray[index].toUpperCase()) {
       // console.log('first IF: ', clientWordArray![index], correctWordArray[index]);
-      dispatch(pushMatchedGreenLettersArray(clientWordArray![index]));
-      return '#79b851';
+      
+      try {
+        dispatch(pushMatchedGreenLettersArray(clientWordArray![index]));
+        return '#79b851';
+      } catch (error) {
+        console.log('GREEN STRING ERROR: ', error)
+        return '#79b851';
+      }
+      
     } else if (correctWordArray.filter( letter => letter.toUpperCase() === clientWordArray![index]).length !== 0) {
       // console.log('second IF: ', correctWordArray.filter( letter => letter === clientWordArray[index]));
-      dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
-      return '#f3c237';
+      
+      try {
+        dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
+        return '#f3c237';
+      } catch (error) {
+        console.log('YELLOW STRING ERROR: ', error)
+        return '#f3c237';
+      }
+      
     } else {
       // console.log('ELSE')
       return '#a0a0a0';
     };
-  };
+  }, [props.clientPreviousWord]);
 
   useEffect( () => {
     document.getElementById(`cell-input-0`)?.focus();
@@ -145,6 +157,7 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
                 changeLetterFunction={handleChangeClientWordFromInputs} 
                 clientWordFromInputs={clientWordFromInputs}
                 color='#fff'
+                // color='#d14141'
                 classNameForAnimations={classNameForAnimations}
               />
             );

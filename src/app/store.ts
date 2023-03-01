@@ -14,7 +14,9 @@ export const store = configureStore({
     win: winReducer,
     matchedLetter: matchedLetterReducer,
     allWords: allWordsReducer,
+
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export type AppDispatch = typeof store.dispatch;

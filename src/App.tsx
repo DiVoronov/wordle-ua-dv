@@ -6,6 +6,7 @@ import { wordList } from './wordList';
 import { RootState } from './app/store';
 import { WinWindow } from './features/Game/WinWindow/WinWindow';
 import { Keyboard } from './features/Game/Keyboard/Keyboard';
+import { Navbar } from './features/Navbar/Navbar';
 
 function App() {
 
@@ -13,11 +14,12 @@ function App() {
 
   return (
     <div className="App">
+      <Navbar/>
       <CellGrid/>
       {
         winStatus
         &&
-        <WinWindow/>
+        <WinWindow win={true}/>
       }
       <Keyboard/>
     </div>

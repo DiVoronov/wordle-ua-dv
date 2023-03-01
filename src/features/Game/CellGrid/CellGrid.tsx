@@ -3,6 +3,7 @@ import { CellRow } from '../../shared/CellRow/CellRow';
 import { StyledCellGrid } from './CellGrid.style';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
+import { WinWindow } from '../WinWindow/WinWindow';
 
 // interface ICellGridProps {
 //   letter: string
@@ -13,6 +14,7 @@ export const CellGrid: React.FC = ( ) => {
 
   const stagesStatus = useSelector( (state: RootState) => state.stagesFill );
   const previousClientsWord = useSelector( (state: RootState) => state.stagesWords );
+  const correctWord = useSelector( (state: RootState) => state.correctWord );
 
   const firstStepArray = [1, 2, 3, 4, 5];
   const secondStepArray = [1, 2, 3, 4];
@@ -123,6 +125,27 @@ export const CellGrid: React.FC = ( ) => {
           <CellRow props={ { clientPreviousWord: previousClientsWord.fifth, statusRow: 'filledDiv' } }/>
 
           <CellRow props={ { statusRow: 'input', stage: 6 } }/>
+        </>
+      }
+
+      {
+        stagesStatus.sixth
+        &&
+        <>
+          <CellRow props={ { clientPreviousWord: previousClientsWord.first, statusRow: 'filledDiv' } }/>
+          <CellRow props={ { clientPreviousWord: previousClientsWord.second, statusRow: 'filledDiv' } }/>
+          <CellRow props={ { clientPreviousWord: previousClientsWord.third, statusRow: 'filledDiv' } }/>
+          <CellRow props={ { clientPreviousWord: previousClientsWord.fourth, statusRow: 'filledDiv' } }/>
+          <CellRow props={ { clientPreviousWord: previousClientsWord.fifth, statusRow: 'filledDiv' } }/>
+          <CellRow props={ { clientPreviousWord: previousClientsWord.sixth, statusRow: 'filledDiv' } }/>
+          {
+            previousClientsWord.sixth !== correctWord.toUpperCase()
+            ?
+            <WinWindow win={false}/>
+            :
+            <WinWindow win={true}/>
+          }
+          
         </>
       }
     </StyledCellGrid>

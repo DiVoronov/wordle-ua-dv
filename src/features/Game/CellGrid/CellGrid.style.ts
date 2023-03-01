@@ -8,7 +8,7 @@ max-width: max-content;
 display: flex;
 flex-direction: column;
 justify-content: center;
-border: 1px solid grey;
+/* border: 1px solid grey; */
 gap: 5px;
 
 /* & form {
@@ -35,18 +35,29 @@ gap: 5px;
         font-weight: 800;
         color: #454545;
         caret-color: transparent;
+
+        &:focus {
+            transition: all .1s ease-in-out;
+            transform: scale(1.1);
+            border: none !important;
+            box-shadow: 0px 0px 5px red;
+            outline: 1px solid #d14141 !important;
+            /* background: pink; */
+        }
     }
 
     & .class-name-for-animations {
         animation: shake .5s ease-in-out 0s;
     }
 
+    
+
     @keyframes shake {
         0% {
             transform: translateX(0px);
         }
         10% {
-            transform: translateX(20px);
+            transform: translateX(2px);
         }
         20% {
             transform: translateX(-2px);
@@ -73,6 +84,15 @@ gap: 5px;
             transform: translateX(2px);
         }100% {
             transform: translateX(0px);
+        }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    & .cellRow {
+        & > .cell, .cellInput { 
+            width: 90%;
+            /* font-size: 1rem; */
         }
     }
 }
