@@ -25,8 +25,6 @@ export const Keyboard = () => {
 
   const cellBgColor = (letter: string) => {
 
-    // const clientWordArray = props.clientPreviousWord?.split('');
-
     if (
       (answer.filter( letterAnswer => letterAnswer === letter).length !== 0)
       &&

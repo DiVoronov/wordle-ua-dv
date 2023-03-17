@@ -8,14 +8,7 @@ max-width: max-content;
 display: flex;
 flex-direction: column;
 justify-content: center;
-/* border: 1px solid grey; */
 gap: 5px;
-
-/* & form {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-} */
 
 & .cellRow {
     width: 100%;
@@ -25,9 +18,9 @@ gap: 5px;
     & > .cell, .cellInput {
         border: .9px solid grey;
         border-radius: 7px;
-        width: 76px;
-        height: 76px;
-        font-size: 3.7rem;
+        width: 50px;
+        height: 50px;
+        font-size: 2.8rem;
         display: flex;
         justify-content: center;
         text-align: center;
@@ -42,7 +35,6 @@ gap: 5px;
             border: none !important;
             box-shadow: 0px 0px 5px red;
             outline: 1px solid #d14141 !important;
-            /* background: pink; */
         }
     }
 
@@ -88,13 +80,11 @@ gap: 5px;
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 290px) {
     & .cellRow {
         & > .cell, .cellInput { 
             width: 90%;
-            /* font-size: 1rem; */
         }
     }
 }
-
 `;

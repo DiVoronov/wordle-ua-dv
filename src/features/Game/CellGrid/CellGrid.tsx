@@ -5,11 +5,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
 import { WinWindow } from '../WinWindow/WinWindow';
 
-// interface ICellGridProps {
-//   letter: string
-//   color: string
-// };
-
 export const CellGrid: React.FC = ( ) => {
 
   const stagesStatus = useSelector( (state: RootState) => state.stagesFill );
@@ -21,9 +16,6 @@ export const CellGrid: React.FC = ( ) => {
   const thirdStepArray = [1, 2, 3];
   const fourthStepArray = [1, 2];
   const fifthStepArray = [1];
-
-  // const stage = [1];
-
 
   return (
     <StyledCellGrid className='cellGrid'>

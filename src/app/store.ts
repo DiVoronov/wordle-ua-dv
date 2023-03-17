@@ -5,6 +5,7 @@ import { stagesWordsReducer } from './slices/stagesWordsSlice';
 import { winReducer } from './slices/winSlice';
 import { matchedLetterReducer } from './slices/matchedLetterSlice';
 import { allWordsReducer } from './slices/allWordsSlice';
+import { infoAppearReducer } from './slices/infoAppearSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     win: winReducer,
     matchedLetter: matchedLetterReducer,
     allWords: allWordsReducer,
+    infoAppear: infoAppearReducer,
 
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),

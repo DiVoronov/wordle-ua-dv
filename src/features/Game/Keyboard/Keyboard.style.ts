@@ -17,7 +17,6 @@ gap: .5rem;
         border: .9px solid grey;
         border-radius: 7px;
         width: 76px;
-        /* height: 76px; */
         font-size: 1.7rem;
         display: flex;
         justify-content: center;

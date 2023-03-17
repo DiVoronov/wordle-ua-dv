@@ -41,9 +41,6 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
 
   const [ clientWordFromInputs, setClientWordFromInputs ] = useState(['', '', '', '', '',]);
   const [ classNameForAnimations, setClassNameForAnimations ] = useState('');
-  // const [ resultOfCheckMatchInWordsList, setResultOfCheckMatchInWordsList ] = useState<string | undefined>('');
-  
-  // let classNameForAnimations = '';
 
   const handleChangeClientWordFromInputs = ( (letter: string, index: number) => {
     const temporaryArray = clientWordFromInputs;
@@ -57,8 +54,6 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
   const checkMatchInWordsList = useMemo( () => wordsList.find( element => element.toUpperCase() === clientWordFromInputs.join('')), [clientWordFromInputs] );
 
   document.addEventListener('keypress', (e: KeyboardEvent) => {
-    // console.log(e.key)
-    // e.preventDefault();
 
     if ((e.key === 'Enter') && clientWordFromInputs.filter( letter => letter === '').length === 0 ) {
       console.log(clientWordFromInputs.join('') )
@@ -71,9 +66,6 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
       ) {
         setClassNameForAnimations('class-name-for-animations');
         setTimeout( () => setClassNameForAnimations(''), 1000);
-        // classNameForAnimations = 'class-name-for-animations';
-        // setTimeout( () => classNameForAnimations = '', 500);
-
 
       } else if (clientWordFromInputs.join('') === correctWord.toUpperCase()) {
         console.log('word is correct. ', 'correctWord: ', correctWord.toUpperCase(), ', and your: ', clientWordFromInputs.join('') );
@@ -107,7 +99,6 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
     const clientWordArray = props.clientPreviousWord?.split('');
 
     if (clientWordArray![index] === correctWordArray[index].toUpperCase()) {
-      // console.log('first IF: ', clientWordArray![index], correctWordArray[index]);
       
       try {
         dispatch(pushMatchedGreenLettersArray(clientWordArray![index]));
@@ -118,7 +109,6 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
       }
       
     } else if (correctWordArray.filter( letter => letter.toUpperCase() === clientWordArray![index]).length !== 0) {
-      // console.log('second IF: ', correctWordArray.filter( letter => letter === clientWordArray[index]));
       
       try {
         dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
@@ -129,23 +119,18 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
       }
       
     } else {
-      // console.log('ELSE')
       return '#a0a0a0';
     };
   }, [props.clientPreviousWord]);
 
   useEffect( () => {
     document.getElementById(`cell-input-0`)?.focus();
-
-    // return () => setClassNameForAnimations('');
   }, []);
 
   return (
     <div className='cellRow'>
-      {/* <form onSubmit={checkClientWord}> */}
         {
           props.statusRow === 'input'
-          // clientWordFromInputs.join('') !== correctWord
           ?
           correctWordArray.map( (letter, index) => {
 
@@ -157,7 +142,6 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
                 changeLetterFunction={handleChangeClientWordFromInputs} 
                 clientWordFromInputs={clientWordFromInputs}
                 color='#fff'
-                // color='#d14141'
                 classNameForAnimations={classNameForAnimations}
               />
             );
@@ -177,7 +161,6 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
             );
           })
         }
-      {/* </form> */}
     </div>
   );
 };

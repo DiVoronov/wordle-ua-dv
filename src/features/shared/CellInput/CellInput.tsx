@@ -13,35 +13,6 @@ export const CellInput: React.FC<ICellInputProps> = ( { letter, changeLetterFunc
 
   const inputRef: React.MutableRefObject<null | HTMLInputElement> = useRef(null);
 
-  // console.log(inputRef.current!.nextSibling)
-  // console.log(inputRef.current!.previousSibling)
-
-  
-  // let counterLetterForFocusFunction = {prev: '', curr: ''};
-  // let indexForFocusFunction = -1;
-
-  // for (let i = 0; (i <= clientWordFromInputs.length - 1) || (indexForFocusFunction !== -1); i++) {
-  //   counterLetterForFocusFunction.curr = clientWordFromInputs[i];
-  //   console.log('index cycle: ', i, '; indexForFocusFunction: ', indexForFocusFunction)
-  //   if (!counterLetterForFocusFunction.curr && counterLetterForFocusFunction.prev) {
-  //     indexForFocusFunction = i;
-  //   };
-  // };
-
-  // if (indexForFocusFunction === index) {
-  //   inputRef.current!.focus();
-  // };
-
-  // for (let i of clientWordFromInputs) {
-  //   counterLetterForFocusFunction.curr = i;
-    // !counterLetterForFocusFunction.curr && counterLetterForFocusFunction.prev && 
-  // };
-
-  // if (clientWordFromInputs) {
-
-  // };
-
-
   const [ value, setValue ] = useState('');
 
   const handleValueInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,8 +25,6 @@ export const CellInput: React.FC<ICellInputProps> = ( { letter, changeLetterFunc
         && 
         (
           (e.currentTarget.value.match(/[А-Яа-я]/gmi)) 
-          // ||
-          // (e.currentTarget.value === '')
           ||
           (e.currentTarget.value.match(/і/gmi))
           ||
@@ -75,14 +44,7 @@ export const CellInput: React.FC<ICellInputProps> = ( { letter, changeLetterFunc
         console.log('handle FN was called ');
         setValue(e.currentTarget.value.toUpperCase());
         changeLetterFunction( e.currentTarget.value.toUpperCase(), index );
-        // document.dispatchEvent(new KeyboardEvent('keydown', {
-        //   key: 'Tab',
-        // }))
     };
-
-    // if ( (inputRef!.current!.nextSibling as HTMLElement) && inputRef.current!.value) {console.log(inputRef.current!.nextSibling.focus())}
-    // inputRef && inputRef.current!.blur();
-
   };
 
   const changeFocus = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -106,9 +68,9 @@ export const CellInput: React.FC<ICellInputProps> = ( { letter, changeLetterFunc
       onChange={handleValueInput}
       value={value}
       maxLength={1}
-      // autoFocus
       ref={inputRef}
       onKeyUp={(e) => changeFocus(e)}
+      autoComplete='off'
     >
 
     </input>    

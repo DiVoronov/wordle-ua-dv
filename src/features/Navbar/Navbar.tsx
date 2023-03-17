@@ -1,10 +1,15 @@
 import React from 'react';
+import { Box } from '@mui/material';
+import { Title } from './Title';
+import { StyledNavbar } from './Navbar.style';
+import { InfoBar } from './InfoBar';
 
 export const Navbar = () => {
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center', background: '#e0e0e0', padding: '1rem'}}>
-      <div style={{display: 'flex', alignItems: 'center', color: '#555', fontSize: '2rem', fontWeight: '800'}}>WORDLE Українською</div>
-    </div>
+    <StyledNavbar>
+      <Title/>
+      <InfoBar/>
+    </StyledNavbar>
   );
 };
