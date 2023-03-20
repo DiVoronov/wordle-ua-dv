@@ -17,16 +17,16 @@ export const WinWindow = ({ win }: IWinWindowProps) => {
         {
           win 
           ?
-          <div> Congratulation! </div>
+          <div> Вітаємо! </div>
           :
-          <div> Unfortunately, you lose! </div>
+          <div> Нажаль, ви не вгадали! </div>
         }
         
         <div> 
-          The answer is: <div style={{ color: `${win ? '#79b851' : '#d14141'}`}}><strong>{answer}</strong></div>  
+          Правильна відповідь: <div style={{ color: `${win ? '#79b851' : '#d14141'}`}}><strong>{answer}</strong></div>  
         </div>
         
-        <div> You can check the word by <a href='http://sum.in.ua/' target='blank'>link</a>.</div>
+        <div> Ви можете перевірити вказане слово у словнику: <a href='http://sum.in.ua/' target='blank' style={{color: `${win ? '#79b851' : '#d14141'}`}}>за посиланням</a>.</div>
       </div>
     </StyledWinWindow>
   );

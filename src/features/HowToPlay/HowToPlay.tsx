@@ -18,7 +18,6 @@ export const HowToPlay = () => {
   const wordLetterCorrect = [{letter: 'р', role: 'incorrect'}, {letter: 'і', role: 'correct'}, {letter: 'ч', role: 'incorrect'}, {letter: 'к', role: 'incorrect'}, {letter: 'а', role: 'incorrect'}];
   const wordLetterPresent = [{letter: 'в', role: 'near'}, {letter: 'і', role: 'incorrect'}, {letter: 'т', role: 'incorrect'}, {letter: 'е', role: 'incorrect'}, {letter: 'р', role: 'incorrect'}];
   const wordNoMatches = [{letter: 'с', role: 'incorrect'}, {letter: 'л', role: 'incorrect'}, {letter: 'о', role: 'incorrect'}, {letter: 'в', role: ''}, {letter: 'о', role: 'incorrect'}];
-
   
   return (
     <StyledHowToPlay>

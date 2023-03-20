@@ -32,6 +32,11 @@ interface ICellRowProps {
   props: IPropsFromCellGrid
 };
 
+interface IGreenLetterGuessed {
+  letter: string
+  index: number
+}
+
 export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
 
   const correctWord = useSelector( (state: RootState) => state.correctWord );
@@ -42,10 +47,12 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
   const [ clientWordFromInputs, setClientWordFromInputs ] = useState(['', '', '', '', '',]);
   const [ classNameForAnimations, setClassNameForAnimations ] = useState('');
 
+  // const [ clientWordGuessedLetterMention, setClientWordGuessedLetterMention ] = useState<string[]>([]);
+
   const handleChangeClientWordFromInputs = ( (letter: string, index: number) => {
     const temporaryArray = clientWordFromInputs;
     temporaryArray[index] = letter; 
-    console.log(clientWordFromInputs, temporaryArray);
+    // console.log(clientWordFromInputs, temporaryArray);
     setClientWordFromInputs([...temporaryArray]);
   });
 
@@ -56,8 +63,8 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
   document.addEventListener('keypress', (e: KeyboardEvent) => {
 
     if ((e.key === 'Enter') && clientWordFromInputs.filter( letter => letter === '').length === 0 ) {
-      console.log(clientWordFromInputs.join('') )
-      console.log(correctWord.toUpperCase())
+      // console.log(clientWordFromInputs.join('') )
+      // console.log(correctWord.toUpperCase())
 
       e.preventDefault();
 
@@ -68,7 +75,7 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
         setTimeout( () => setClassNameForAnimations(''), 1000);
 
       } else if (clientWordFromInputs.join('') === correctWord.toUpperCase()) {
-        console.log('word is correct. ', 'correctWord: ', correctWord.toUpperCase(), ', and your: ', clientWordFromInputs.join('') );
+        // console.log('word is correct. ', 'correctWord: ', correctWord.toUpperCase(), ', and your: ', clientWordFromInputs.join('') );
 
         dispatch(setWinStatus(true));
 
@@ -80,7 +87,7 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
         if (props.stage === 6) { dispatch(setSixthWord(clientWordFromInputs.join(''))); dispatch(setSixthStatus(true)) };
 
       } else { 
-        console.log('word is NOT correct');
+        // console.log('word is NOT correct');
 
         if (props.stage === 1) { dispatch(setFirstWord(clientWordFromInputs.join(''))); dispatch(setFirstStatus(true)) };
         if (props.stage === 2) { dispatch(setSecondWord(clientWordFromInputs.join(''))); dispatch(setSecondStatus(true)) };
@@ -94,31 +101,79 @@ export const CellRow: React.FC<ICellRowProps> = ( {props}: ICellRowProps ) => {
     
   });
 
+  const clientWordGuessedLetterMention: string[] = [];
+
   const cellBgColor = useCallback( (index: number) => {
 
     const clientWordArray = props.clientPreviousWord?.split('');
-
+    
     if (clientWordArray![index] === correctWordArray[index].toUpperCase()) {
       
       try {
+        clientWordGuessedLetterMention.push(clientWordArray![index]);
         dispatch(pushMatchedGreenLettersArray(clientWordArray![index]));
         return '#79b851';
       } catch (error) {
-        console.log('GREEN STRING ERROR: ', error)
+        clientWordGuessedLetterMention.push(clientWordArray![index]);
+        // console.log('GREEN STRING ERROR: ', error);
         return '#79b851';
-      }
+      };
       
     } else if (correctWordArray.filter( letter => letter.toUpperCase() === clientWordArray![index]).length !== 0) {
       
       try {
-        dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
-        return '#f3c237';
+
+        if (correctWordArray.filter( letter => letter.toUpperCase() === clientWordArray![index]).length === 1) {
+          if (clientWordArray!.filter( letter => letter.toUpperCase() === clientWordArray![index]).length === 1) {
+            clientWordGuessedLetterMention.push(clientWordArray![index]);
+            dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
+            return '#f3c237';
+
+          } else if ((clientWordArray!.filter( letter => letter.toUpperCase() === clientWordArray![index]).length === 2) && (clientWordGuessedLetterMention!.filter( letter => letter.toUpperCase() === clientWordArray![index]).length === 0)) {
+
+            clientWordGuessedLetterMention.push(clientWordArray![index]);
+            dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
+            return '#f3c237';
+          } else if ((clientWordArray!.filter( letter => letter.toUpperCase() === clientWordArray![index]).length === 3) && (clientWordGuessedLetterMention!.filter( letter => letter.toUpperCase() === clientWordArray![index]).length === 0) ) {
+            clientWordGuessedLetterMention.push(clientWordArray![index]);
+            dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
+            return '#f3c237';
+          } else {
+            clientWordGuessedLetterMention.push(clientWordArray![index]);
+            return '#a0a0a0';
+          }
+          
+        } else if (correctWordArray.filter( letter => letter.toUpperCase() === clientWordArray![index]).length === 2) {
+          if (clientWordArray!.filter( letter => letter.toUpperCase() === clientWordArray![index]).length === 1) {
+            clientWordGuessedLetterMention.push(clientWordArray![index]);
+            dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
+            return '#f3c237';
+          } else if (clientWordArray!.filter( letter => letter.toUpperCase() === clientWordArray![index]).length === 2) {
+            clientWordGuessedLetterMention.push(clientWordArray![index]);
+            dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
+            return '#f3c237';
+          } else if ((clientWordArray!.filter( letter => letter.toUpperCase() === clientWordArray![index]).length === 3) && (clientWordGuessedLetterMention!.filter( letter => letter.toUpperCase() === clientWordArray![index]).length < 3)) {
+            clientWordGuessedLetterMention.push(clientWordArray![index]);
+            dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
+            return '#f3c237';
+          } else {
+            clientWordGuessedLetterMention.push(clientWordArray![index]);
+            return '#a0a0a0';
+          }
+        } else {
+          clientWordGuessedLetterMention.push(clientWordArray![index]);
+          dispatch(pushMatchedYellowLettersArray(clientWordArray![index]));
+          return '#f3c237';
+        }
+        
       } catch (error) {
-        console.log('YELLOW STRING ERROR: ', error)
+        clientWordGuessedLetterMention.push(clientWordArray![index]);
+        // console.log('YELLOW STRING ERROR: ', error)
         return '#f3c237';
       }
       
     } else {
+      clientWordGuessedLetterMention.push(clientWordArray![index]);
       return '#a0a0a0';
     };
   }, [props.clientPreviousWord]);

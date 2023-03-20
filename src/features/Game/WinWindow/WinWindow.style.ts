@@ -8,7 +8,13 @@ left: 0px;
 width: 100%;
 
 & #box-for-card {
-    width: 60%;
+    width: 70%;
+    background: #fff;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px gray;
+    position: relative;
+
     height: 30%;
     display: flex;
     flex-direction: column;
@@ -16,9 +22,6 @@ width: 100%;
     justify-content: center;
     align-content: center;
     align-items: center;
-    border-radius: 10px;
-    background: #f5f5f5;
-    border: 2px solid grey;
     padding: 2rem;
     margin: 20% auto;
 

@@ -7,7 +7,7 @@ export const Title = () => {
         sx={{
           display: 'flex', 
           alignItems: 'center', 
-          color: '#83deea', 
+          color: '#000', 
           fontSize: '2rem', 
           fontWeight: '800',
           letterSpacing: '.2rem'
